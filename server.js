@@ -12,3 +12,75 @@ const connect = mysql.createConnection(
     database: 'work_db'
     },
   );
+
+const firstQuestion = [
+  {
+    type: 'list', 
+    name: 'firstQ',
+    message: 'Please choose one:',
+    choices: ['View Depts.', 'View Jobs', 'View Employees', 'Add Dept.', 'Add Job', 'Add Employee', 'Update Employee Job']
+  }
+];
+
+const addDepartment = [
+  {
+    type: 'input', 
+    name: 'departmentQuestion', 
+    message: 'Department name?',
+  }
+]; 
+
+const addRole = [
+  {
+    type: 'input', 
+    name: 'roleQuestion', 
+    message: 'Name of role?'
+  }, 
+  {
+    type: 'input', 
+    name: 'salaryQuestion', 
+    message: 'Salary of role?'
+  }, 
+  {
+    type: 'input', 
+    name: 'departmentQuestion', 
+    message: 'What is the department ID?'
+  }
+];
+
+const addEmployee = [
+  {
+    type: 'input', 
+    name: 'first_name', 
+    message: 'First name?'
+  }, 
+  {
+    type: 'input', 
+    name: 'last_name', 
+    message: 'Last name?'
+  }, 
+  {
+    type: 'input', 
+    name: 'role_id', 
+    message: 'Role ID?'
+  },
+  {
+    type: 'input', 
+    name: 'manager_id', 
+    message: 'Manager ID?'
+  }
+];
+
+const updateEmployee = [
+  {
+    type: 'input', 
+    name: 'current', 
+    message: 'Current ID?'
+  },
+  {
+    type: 'input', 
+    name: 'new', 
+    message: 'New ID?'
+  }
+];
+
