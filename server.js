@@ -243,3 +243,12 @@ function updateRole() {
   })
 };
 
+function init() {
+  inquirer
+  .prompt(firstQuestion)
+      .then((answer) => {
+          answerFirstQuestion(answer)
+  });
+}
+
+init();
