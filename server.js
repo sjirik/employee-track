@@ -132,3 +132,114 @@ function answerFirstQuestion({firstQ}) {
         console.log(`Goodbye!`);
     }
 };
+
+function addDept() {
+  inquirer.prompt(addDepartment)
+  .then((answers) => {
+    connect.query(
+      `INSERT INTO department (name) VALUES (?);`, 
+      [answers.departmentQuestion], 
+      (err, results) => { 
+        err
+        ? console.log(err)
+        : viewDepts() &&
+        console.log("Successfully added Department")
+      }
+    )
+  })
+}; 
+
+function addRoles() {
+  inquirer.prompt(addRole)
+  .then((answers) => {
+    connect.query(
+      `INSERT INTO job (title, pay, department_id) VALUES ( ?, ?, ?);`, 
+      [answers.roleQuestion, answers.salaryQuestion, answers.departmentQuestion], 
+      (err, results) => { 
+        err
+        ? console.log(err)
+        : viewRoles();
+      }
+    )
+  })
+}; 
+
+function addEmploy() {
+  inquirer.prompt(addEmployee)
+  .then((answers) => {
+    connect.query(
+      `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES( ?, ?, ?, ?)`, 
+      [answers.first_name, answers.last_name, answers.role_id, answers.manager_id], 
+      (err, results) => { 
+        err
+        ? console.log(err)
+        : viewEmploy();
+      }
+    )
+  })
+}; 
+
+function viewDepts() {
+  connect.query (
+    `SELECT department.name AS 'Department', department.id AS 'Department ID' FROM department`, 
+    (err, results) => { 
+      err
+      ? console.log(err)
+      : console.table(results)
+      init();
+    }
+  )
+};
+
+function viewRoles() {
+  connect.query (
+    `SELECT job.title AS 'Role Title', job.id AS 'Role ID' ,job.pay AS 'Salary', job.department_id AS 'Department ID' FROM job`, 
+    (err, results) => { 
+      err
+      ? console.log(err)
+      : console.table(results)
+      init();
+    }
+  )
+};
+
+function viewEmploy() {
+  connect.query (
+    `SELECT 
+      employee.id AS 'Employee ID',
+      employee.first_name AS 'First Name', 
+      employee.last_name AS 'Last Name', 
+      job.title AS 'Title', 
+      job.department_id AS 'Department', 
+      job.pay AS 'Salary',
+      employee.manager_id AS 'Manager ID'
+     FROM 
+      employee
+        JOIN job ON employee.role_id = job.id
+        JOIN department ON job.department_id = department.id 
+        LEFT JOIN employee manager ON manager.id = employee.manager_id`,
+        (err, results) => { 
+          err
+          ? console.log(err)
+          : console.table(results)
+          init();
+    }
+  )
+}; 
+
+function updateRole() {
+  inquirer
+  .prompt(updateEmployee)
+  .then((answers) =>{
+      connect.query(
+          `UPDATE employee SET role_id = ? WHERE id = ?`,
+              [answers.current, answers.new],
+          (err, results) => { 
+              err
+              ? console.log(err)
+              : viewEmploy();
+          }
+      );
+  })
+};
+
