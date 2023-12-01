@@ -84,3 +84,51 @@ const updateEmployee = [
   }
 ];
 
+function answerFirstQuestion({firstQ}) {
+  switch(firstQ) {
+    case 'View Depts.':
+        
+        viewDepts();
+
+      break;
+
+    case 'View Jobs':
+
+      viewRoles();
+        
+      break;
+
+    case 'View Employees':
+
+      viewEmploy();
+      
+      break;
+
+    case 'Add Dept.':
+
+      addDept();
+     
+      break;
+
+    case 'Add Job':
+
+      addRoles();
+      
+      break;
+
+    case 'Add Employee':
+
+      addEmploy();
+      
+      break;
+
+    case 'Update Employee Job':
+      
+      updateRole();
+    
+      break;
+
+      default:
+        console.log(`Goodbye!`);
+    }
+};
